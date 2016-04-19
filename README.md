@@ -1,6 +1,6 @@
-##PORTAFOLIO CONFIG 
+#PORTAFOLIO CONFIG 
 
-#USO DE PROYECTO
+###USO DE PROYECTO
 
  - git init
  - git add archivos
