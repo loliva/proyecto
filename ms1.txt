@@ -38,6 +38,11 @@ VLAN 200
 NAME ADMIN
 exit
 
+int vlan 200
+ip add 172.16.120.10 255.255.255.0
+no sh
+exit
+
 !configuro vtp server
 vtp mode server
 vtp domain telecenter

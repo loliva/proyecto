@@ -15,6 +15,11 @@ switchport port-security violation shutdown
 switchport port-security maximum 2
 exit
 
+int vlan 200
+ip add 172.16.120.15 255.255.255.0
+no sh
+exit
+
 !vlan80
 interface range f0/20-24
 swit mode access

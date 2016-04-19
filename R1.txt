@@ -6,7 +6,9 @@ host R1
 !Levanto intefaz para generar virtuales
 int fa0/1
 no sh
+
 !DOT1Q para Intervlans
+
 int fa0/1.80
 enc dot 80
 ip add 192.168.0.2 255.255.255.192
@@ -16,11 +18,13 @@ standby 80 preempt
 exit
 int fa0/1.50
 enc dot 50
+
 ip add 192.168.0.66 255.255.255.224
 standby 50 ip 192.168.0.65
 standby priority 150
 standby 50 preempt
 exit
+
 int fa0/1.10
 enc dot 10
 ip add 192.168.0.98 255.255.255.240
@@ -28,6 +32,7 @@ standby 10 ip 192.168.0.97
 standby priority 150
 standby 10 preempt
 exit
+
 int fa0/1.20
 enc dot 20
 ip add 192.168.0.114 255.255.255.240
@@ -35,6 +40,7 @@ standby 20 ip 192.168.0.113
 standby priority 150
 standby 20 preempt
 exit
+
 int fa0/1.30
 enc dot 30
 ip add 192.168.0.130 255.255.255.240
@@ -42,6 +48,7 @@ standby 30 ip 192.168.0.129
 standby priority 150
 standby 30 preempt
 exit
+
 int fa0/1.40
 enc dot 40
 ip add 192.168.0.146 255.255.255.240
@@ -49,6 +56,7 @@ standby 40 ip 192.168.0.145
 standby priority 150
 standby 40 preempt
 exit
+
 int fa0/1.60
 enc dot 60
 ip add 192.168.162 255.255.255.240
@@ -56,6 +64,7 @@ standby 60 ip 192.168.0.161
 standby priority 150
 standby 60 preempt
 exit 
+
 int fa0/1.70
 enc dot 70
 ip add 10.0.0.2 255.255.255.240
@@ -63,6 +72,7 @@ standby 70 ip 10.0.0.1
 standby priority 150
 standby 70 preempt
 exit
+
 int f0/1.200
 enc dot 200
 ip add 172.16.0.2 255.255.255.192
@@ -71,6 +81,10 @@ standby priority 150
 standby 200 preempt
 exit
 
+int vlan 200
+ip add 172.16.120.9 255.255.255.0
+no sh
+exit
 
 !Configuro DHCP
 !Excluyo primero las ip de los pools

@@ -9,6 +9,10 @@ swit mode trunk
 switchport trunk allowed vlan all
 exit
 
+int vlan 200
+ip add 172.16.120.11 255.255.255.0
+no sh
+exit
 
 !configuro vtp client
 vtp mode client
