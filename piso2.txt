@@ -1,0 +1,48 @@
+ena 
+conf t
+host piso2
+
+int ran g0/1-2
+swit trunk encapsulation dot1q
+swit mode trunk 
+exit
+
+conf t
+interface range g0/1-2
+switchport mode trunk
+exit
+
+!seguridad para todas las puertas
+interface range f0/1-24
+switchport port-security 
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+switchport port-security maximum 2
+exit
+
+!declaro puertas por vlan
+!vlan30
+interface range f0/1-12
+swit mode access
+swit access vlan 30
+exit
+
+!vlan40
+interface range f0/11-19
+swit mode access
+swit access vlan 40
+exit
+
+!vlan80
+interface range f0/20-24
+swit mode access
+swit access vlan 80
+exit
+
+
+!configuro vtp client
+vtp mode client
+vtp domain telecenter
+vtp password telecenter
+vtp version 2
+

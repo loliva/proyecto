@@ -1,0 +1,49 @@
+ena 
+conf t
+host MS2
+int g0/1
+
+swit trunk encapsulation dot1q
+swit mode trunk 
+switchport trunk allowed vlan all
+exit
+int ran fa0/20-24
+swit trunk encapsulation dot1q
+swit mode trunk 
+switchport trunk allowed vlan all
+exit
+
+!Declaro vlans
+VLAN 10
+NAME VISITAS
+exit
+VLAN 20
+NAME RECEPCION
+exit
+VLAN 30
+NAME ADMINISTRACION
+exit
+VLAN 40
+NAME GERENCIA
+exit
+VLAN 50
+NAME INGENIERIA
+exit
+VLAN 60
+NAME SOPORTE
+exit
+VLAN 70
+NAME SERVIDORES
+exit
+VLAN 80
+NAME VOZ
+exit
+VLAN 200
+NAME ADMIN
+exit
+
+!configuro vtp client
+vtp mode client
+vtp domain telecenter
+vtp password telecenter
+vtp version 2

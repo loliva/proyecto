@@ -1,0 +1,79 @@
+!R2
+ena
+conf t
+host R2
+
+!Levanto intefaz para generar virtuales
+int fa0/1
+no sh
+!DOT1Q para Intervlans
+int fa0/1.80
+enc dot 80
+ip add 192.168.0.3 255.255.255.192
+standby 80 ip 192.168.0.1
+standby priority 250
+!standby 80 preempt
+exit
+int fa0/1.50
+enc dot 50
+ip add 192.168.0.67 255.255.255.224
+ip helper-address 192.168.0.66
+standby 50 ip 192.168.0.65
+standby priority 250
+!standby 50 preempt
+exit
+int fa0/1.10
+enc dot 10
+ip add 192.168.0.99 255.255.255.240
+ip helper-address 192.168.0.98
+standby 10 ip 192.168.0.97
+standby priority 250
+!standby 10 preempt
+exit
+int fa0/1.20
+enc dot 20
+ip add 192.168.0.115 255.255.255.240
+ip helper-address 192.168.0.114
+standby 20 ip 192.168.0.113
+standby priority 250
+!standby 20 preempt
+exit
+int fa0/1.30
+enc dot 30
+ip add 192.168.0.131 255.255.255.240
+ip helper-address 192.168.0.130
+standby 30 ip 192.168.0.129
+standby priority 250
+!standby 30 preempt
+exit
+int fa0/1.40
+enc dot 40
+ip add 192.168.0.147 255.255.255.240
+ip helper-address 192.168.0.146
+standby 40 ip 192.168.0.145
+standby priority 250
+!standby 40 preempt
+exit
+int fa0/1.60
+enc dot 60
+ip add 192.168.0.163 255.255.255.240
+ip helper-address 192.168.0.162
+standby 60 ip 192.168.0.161
+standby priority 250
+!standby 60 preempt
+exit 
+int fa0/1.70
+enc dot 70
+ip add 10.0.0.3 255.255.255.240
+standby 70 ip 10.0.0.1
+standby priority 250
+!standby 70 preempt
+exit
+int f0/1.200
+enc dot 200
+ip add 172.16.0.3 255.255.255.192
+standby 200 ip 172.16.120.1
+standby priority 250
+!standby 200 preempt
+exit
+
