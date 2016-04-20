@@ -1,4 +1,5 @@
-!R1
+!comentario
+!R1 
 ena
 conf t
 host R1
@@ -16,9 +17,9 @@ standby 80 ip 192.168.0.1
 standby priority 150
 standby 80 preempt
 exit
+
 int fa0/1.50
 enc dot 50
-
 ip add 192.168.0.66 255.255.255.224
 standby 50 ip 192.168.0.65
 standby priority 150
