@@ -77,7 +77,7 @@ exit
 int f0/1.200
 enc dot 200
 ip add 172.16.0.2 255.255.255.192
-standby 200 ip 172.16.120.1
+standby 200 ip 172.16.0.1
 standby priority 150
 standby 200 preempt
 exit
