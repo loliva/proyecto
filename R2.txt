@@ -143,10 +143,10 @@ ip nat inside source static 10.0.0.9 209.99.33.5
 
 !PAT
 ip nat pool PAT 200.99.33.1 200.99.33.2 netmask 255.255.255.248
-access list 1 permit 192.168.0.64 0.0.0.31
-access list 1 permit 192.168.0.128 0.0.0.15
-access list 1 permit 192.168.0.144 0.0.0.15
-access list 1 permit 192.168.0.160 0.0.0.15
+access-list 1 permit 192.168.0.64 0.0.0.31
+access-list 1 permit 192.168.0.128 0.0.0.15
+access-list 1 permit 192.168.0.144 0.0.0.15
+access-list 1 permit 192.168.0.160 0.0.0.15
 ip nat inside source list 1 pool PAT overload
 
 !ip nat inside source list PAT interface fa0/0.1 overload
