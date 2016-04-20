@@ -19,6 +19,7 @@ int vlan 200
 ip add 172.16.120.15 255.255.255.0
 no sh
 exit
+ip de 172.16.0.1
 
 !vlan80
 interface range f0/20-24
@@ -33,3 +34,6 @@ vtp domain telecenter
 vtp password telecenter
 vtp version 2
 
+!STP
+spanning-tree mode rapid-pvst
+spanning-tree portfast default

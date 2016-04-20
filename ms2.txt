@@ -13,9 +13,22 @@ int vlan 200
 ip add 172.16.120.11 255.255.255.0
 no sh
 exit
+ip de 172.16.0.1
 
 !configuro vtp client
 vtp mode client
 vtp domain telecenter
 vtp password telecenter
 vtp version 2
+
+!Etherchannel
+interface range fa0/1-4
+channel-protocol lacp
+channel-group 1 mode active
+no sh
+exit
+
+!Spanning Tree
+spanning-tree mode rapid-pvst
+spanning-tree portfast default
+exit

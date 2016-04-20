@@ -4,12 +4,45 @@ ena
 conf t
 host R1
 
+!WAN
+int fa0/0
+no sh
+
+!PAT DINAMICO
+int fa0/0.1
+ip add 209.42.22.1 255.255.255.248
+no sh
+nat outside
+
+int fa0/0.2
+ip add 209.42.22.2 255.255.255.248
+no sh
+nat outside
+
+!NAT ESTATICO
+int fa0/0.3
+ip add 209.42.22.3 255.255.255.248
+no sh
+nat outside
+
+int fa0/0.4
+ip add 209.42.22.4 255.255.255.248
+no sh
+nat outside
+
+int fa0/0.5
+ip add 209.42.22.5 255.255.255.248
+no sh
+nat outside
+
 !Levanto intefaz para generar virtuales
+
 int fa0/1
 no sh
 
 !DOT1Q para Intervlans
 
+!Config vlan80
 int fa0/1.80
 enc dot 80
 ip add 192.168.0.2 255.255.255.192
@@ -18,14 +51,17 @@ standby priority 150
 standby 80 preempt
 exit
 
+!Config vlan50
 int fa0/1.50
 enc dot 50
 ip add 192.168.0.66 255.255.255.224
 standby 50 ip 192.168.0.65
 standby priority 150
 standby 50 preempt
+nat inside
 exit
 
+!Config vlan10
 int fa0/1.10
 enc dot 10
 ip add 192.168.0.98 255.255.255.240
@@ -34,6 +70,7 @@ standby priority 150
 standby 10 preempt
 exit
 
+!Config vlan20
 int fa0/1.20
 enc dot 20
 ip add 192.168.0.114 255.255.255.240
@@ -42,38 +79,47 @@ standby priority 150
 standby 20 preempt
 exit
 
+!Config vlan30
 int fa0/1.30
 enc dot 30
 ip add 192.168.0.130 255.255.255.240
 standby 30 ip 192.168.0.129
 standby priority 150
 standby 30 preempt
+nat inside
 exit
 
+!Config vlan40
 int fa0/1.40
 enc dot 40
 ip add 192.168.0.146 255.255.255.240
 standby 40 ip 192.168.0.145
 standby priority 150
 standby 40 preempt
+nat inside
 exit
 
+!Config vlan60
 int fa0/1.60
 enc dot 60
 ip add 192.168.162 255.255.255.240
 standby 60 ip 192.168.0.161
 standby priority 150
 standby 60 preempt
+nat inside
 exit 
 
+!Config vlan70
 int fa0/1.70
 enc dot 70
 ip add 10.0.0.2 255.255.255.240
 standby 70 ip 10.0.0.1
 standby priority 150
 standby 70 preempt
+nat inside
 exit
 
+!Config vlan200
 int f0/1.200
 enc dot 200
 ip add 172.16.0.2 255.255.255.192
@@ -82,10 +128,6 @@ standby priority 150
 standby 200 preempt
 exit
 
-int vlan 200
-ip add 172.16.120.9 255.255.255.0
-no sh
-exit
 
 !Configuro DHCP
 !Excluyo primero las ip de los pools
@@ -138,5 +180,31 @@ default-router 192.168.0.161
 !Duracion de la ip para 2 dias
 !leases 2 
 exit
+
+!NAT Y PAT
+!
+!NAT ESTATICO SERVIDORES
+ip nat inside source static 10.0.0.4 209.42.22.3
+ip nat inside source static 10.0.0.5 209.42.22.4
+ip nat inside source static 10.0.0.6 209.42.22.5
+
+
+!PAT
+ip nat inside source list PAT interface fa0/0.1 overload
+ip access-list standard PAT
+permit 192.168.0.64 0.0.0.31
+permit 192.168.0.128 0.0.0.15
+permit 192.168.0.144 0.0.0.15
+permit 192.168.0.160 0.0.0.15
+
+ip nat inside source list PAT interface fa0/0.2 overload
+ip access-list standard PAT
+permit 192.168.0.64 0.0.0.31
+permit 192.168.0.128 0.0.0.15
+permit 192.168.0.144 0.0.0.15
+permit 192.168.0.160 0.0.0.15
+
+
+
 
 
