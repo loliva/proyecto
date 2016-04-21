@@ -3,8 +3,8 @@ conf t
 host piso3
 
 int ran g0/1-2
-swit trunk encapsulation dot1q
 swit mode trunk 
+switchport trunk allowed vlan all
 exit
 
 !seguridad para todas las puertas

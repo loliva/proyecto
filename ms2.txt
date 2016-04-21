@@ -4,7 +4,6 @@ host MS2
 int g0/1
 
 int ran fa0/20-24
-swit trunk encapsulation dot1q
 swit mode trunk 
 switchport trunk allowed vlan all
 exit
