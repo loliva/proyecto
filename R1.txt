@@ -1,4 +1,3 @@
-!comentario
 !R1 
 ena
 conf t

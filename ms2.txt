@@ -12,7 +12,7 @@ int vlan 200
 ip add 172.16.120.11 255.255.255.0
 no sh
 exit
-ip de 172.16.0.1
+ip add 172.16.0.1
 
 !configuro vtp client
 vtp mode client
