@@ -5,33 +5,10 @@ conf t
 host R1
 
 !WAN
-int fa0/0
-no sh
 
 !PAT DINAMICO
-int fa0/0.1
-ip add 209.42.22.1 255.255.255.248
-no sh
-nat outside
-
-int fa0/0.2
-ip add 209.42.22.2 255.255.255.248
-no sh
-nat outside
-
-!NAT ESTATICO
-int fa0/0.3
+int fa0/0
 ip add 209.42.22.3 255.255.255.248
-no sh
-nat outside
-
-int fa0/0.4
-ip add 209.42.22.4 255.255.255.248
-no sh
-nat outside
-
-int fa0/0.5
-ip add 209.42.22.5 255.255.255.248
 no sh
 nat outside
 
@@ -185,8 +162,8 @@ exit
 !
 !NAT ESTATICO SERVIDORES
 ip nat inside source static 10.0.0.4 209.42.22.3
-ip nat inside source static 10.0.0.5 209.42.22.4
-ip nat inside source static 10.0.0.6 209.42.22.5
+!ip nat inside source static 10.0.0.5 209.42.22.4
+!ip nat inside source static 10.0.0.6 209.42.22.5
 
 
 !PAT
@@ -198,7 +175,7 @@ access-list 1 permit 192.168.0.144 0.0.0.15
 access-list 1 permit 192.168.0.160 0.0.0.15
 ip nat inside source list 1 pool PAT overload
 
-!ip nat inside source list PAT interface fa0/0.1 overload
+!ip nat inside source list PAT interface fa0/0 overload
 !ip access-list standard PAT
 !permit 192.168.0.64 0.0.0.31
 !permit 192.168.0.128 0.0.0.15
