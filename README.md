@@ -10,6 +10,6 @@
 
  - git add archivos
  - git status
- - git commit -m "Algu comentario"
+ - git commit -m "Algun comentario"
  - git push -u origin master
 
