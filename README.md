@@ -2,11 +2,11 @@
 
 ###USO DE PROYECTO
 
-#Descargar Proyecto
+####Descargar Proyecto
 
  - git clone http://github.com/loliva/proyecto.git
 
-#Una vez descargado y realizado modificaciones dentro del proyecto, se debe ejecutar los siguientes pasos:
+####Una vez descargado y realizado modificaciones dentro del proyecto, se debe ejecutar los siguientes pasos:
 
  - git add archivos
  - git status
