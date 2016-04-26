@@ -1,0 +1,56 @@
+#####
+VAGRANTFILE_API_VERSION = "2"
+BASE_OS_6 = "bento/centos-6.7"
+BASE_OS_5 = "bento/centos-5.11"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+config.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box"
+
+#todas las maquinas son iguales en recursos
+config.vm.provider "virtualbox" do |v|
+	v.cpus		= 2
+	v.memory	= 2048
+end
+
+
+# provisionamiento base, comun para todos
+config.vm.provision "shell", path: "Puppetsetup", privileged: true
+#
+config.vm.provision "puppet", manifests_path: "manifests", manifest_file: "server.pp", module_path: "modules", options: "--verbose" # --debug --noop
+
+
+
+# DNS
+	config.vm.define "dns" do |box|
+    	box.vm.box = BASE_OS_6
+		box.vm.network "private_network", virtualbox__intnet: "portafolio", ip: "10.0.0.5"
+ 		#box.vm.network "forwarded_port", guest: 53, host: 53
+		box.vm.hostname = "dns"
+	end
+
+# HTTP/S
+	config.vm.define "http" do |box|
+    	box.vm.box = BASE_OS_6
+		box.vm.network "private_network", virtualbox__intnet: "portafolio", ip: "10.0.0.6"
+ 		#box.vm.network "forwarded_port", guest: 80, host: 80
+		box.vm.hostname = "http"
+	end
+
+# MYSQL
+	config.vm.define "mysql" do |box|
+    	box.vm.box = BASE_OS_6
+		box.vm.network "private_network", virtualbox__intnet: "portafolio", ip: "10.0.0.7"
+ 		#box.vm.network "forwarded_port", guest: 3306, host: 3306
+		box.vm.hostname = "mysql"
+	end
+
+# SQUID
+	config.vm.define "squid" do |box|
+    	box.vm.box = BASE_OS_6
+		box.vm.network "private_network", virtualbox__intnet: "portafolio", ip: "10.0.0.8"
+ 		#box.vm.network "forwarded_port", guest: 8080, host: 8080
+		box.vm.hostname = "squid"
+	end
+end
+
+
+

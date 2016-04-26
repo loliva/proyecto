@@ -1,0 +1,38 @@
+#!/bin/sh -x
+
+# instala wget
+version=$(rpm -qa wget)
+if [ "X" == "X$version" ]; then
+yum install -y wget
+fi
+
+# lsb_release
+version=$(rpm -qa redhat-lsb-core)
+if [ "X" == "X$version" ]; then
+yum install -y redhat-lsb-core
+fi
+
+# instala puppet
+version=$(rpm -qa puppet)
+if [ "X" == "X$version" ]; then
+# ejecutar el contenido de Puppetsetup
+release=$(lsb_release -rs | cut -f1 -d.)
+
+if [ "X7" == "X$release" ]; then
+rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+yum -y install puppet wget unzip
+fi
+
+if [ "X6" == "X$release" ]; then
+rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+yum -y install puppet wget unzip
+fi
+
+if [ "X5" == "X$release" ]; then
+wget https://yum.puppetlabs.com/puppetlabs-release-el-5.noarch.rpm
+rpm -Uvh puppetlabs-release-el-5.noarch.rpm
+yum -y install puppet unzip
+fi
+
+#
+fi
