@@ -1,0 +1,18 @@
+$TTL 86400 
+@ IN SOA ns.telecenter.cl. root.localhost (
+2016021210 		; serial (d. adams)
+43200 			; refresh
+3600 			; retry
+3600000 		; expiry
+2592000 ) 		; minimum
+
+@		IN	NS	ns.telecenter.cl.
+ns		IN	A	10.0.0.5
+@	IN	A	10.0.0.5
+servidor 	IN	CNAME	ns.telecenter.cl.
+
+;servidores
+www		IN	A	10.0.0.5
+mail		IN	A 	10.0.0.10
+
+

@@ -1,0 +1,15 @@
+	zone "0.168.192.zone" {
+        type master;
+        file "/var/named/0.168.192.rev";
+        }; 
+
+        zone "0.16.172.zone" {
+        type master;
+        file "/var/named/0.16.172.rev";
+        };
+
+        zone "0.0.10.zone" {
+        type master;
+        file "/var/named/0.0.10.rev";
+        }; 
+

@@ -1,0 +1,13 @@
+$TTL 86400
+@ IN SOA ns.telecenter.cl. root.localhost. (
+2016011401 ; Serial
+28800 ; Refresh
+14400 ; Retry
+3600000 ; Expire
+86400 ) ; Minimum
+
+@ IN NS ns.telecenter.cl.
+
+;
+5	IN	PTR	ns.telecenter.cl.
+
