@@ -1,0 +1,7 @@
+<% @services.each do |@service| %>
+server {
+    server_name  <%=@service['vhost']%>;
+    set $upstream "http://<%=@service['name']%>";
+    include reverse_proxy_params;
+}
+<% end %>

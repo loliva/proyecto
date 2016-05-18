@@ -1,0 +1,46 @@
+user  nginx;
+### Workers en base a CPU ###
+worker_processes  4;
+
+events {
+    worker_connections  1024;
+}
+
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+http {
+    include	  /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+    
+    
+    
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    types_hash_max_size 2048;
+    #server_tokens off;
+    #server_names_hash_bucket_size 64;
+    #server_name_in_redirect off;
+
+    ##Tuning keepalive
+    #Request keepalive (default 100)
+    #keepalive_request 200;
+	#Timeout keepalive (default 65)
+    keepalive_timeout  30;
+
+    #gzip  on;
+
+
+	##CONFIG VHOSTS###
+ 	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/conf.d/upstream/*.conf;
+	include /etc/nginx/conf.d/reverse_proxy/*.conf; 
+}
+

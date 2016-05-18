@@ -1,0 +1,66 @@
+ProxyIOBufferSize 1048576
+
+<% @backends.each do |backend| %>
+<Proxy balancer://<%=backend['name']%>>
+<% backend['nodes'].each_with_index do |node, index| %>
+    BalancerMember <%=node%> retry=60 route=<%=index%> keepalive=on
+<% end %>
+    ProxySet stickysession=TSN
+    ProxySet timeout=5
+</Proxy>
+<% end %>
+Header add Set-Cookie "TSN=n.%{BALANCER_WORKER_ROUTE}e;path=/;" env=BALANCER_ROUTE_CHANGED
+
+<% @virtualhosts.each do |virtualhost| %>
+
+
+<VirtualHost *:80>
+<%################ DESDE ACA %>
+	ServerName <%=virtualhost['name']%>
+<% if virtualhost['alias'] %>
+	ServerAlias <%=virtualhost['alias']%>
+<% end %>
+<% virtualhost['apps'].each do |app| %>
+<% if app['root'] %>
+	ProxyPass <%=app['path']%> balancer://<%=app['backend']%>
+<% elsif app['src'] %>
+	RewriteEngine On
+	RewriteRule ^<%=app['src']%>/(.*) http://<%=virtualhost['name']%>/$1 [P]
+	ProxyPass <%=app['path']%> balancer://<%=app['backend']%><%=app['src']%>
+<% else %>
+	ProxyPass <%=app['path']%> balancer://<%=app['backend']%><%=app['path']%>
+<% end %>
+<% end %>
+<%################ HASTA ACA %>
+</VirtualHost>
+
+
+<% if virtualhost['ssl'] %>
+<VirtualHost *:443>
+<%################ DESDE ACA %>
+	ServerName <%=virtualhost['name']%>
+<% if virtualhost['alias'] %>
+	ServerAlias <%=virtualhost['alias']%>
+<% end %>
+<% virtualhost['apps'].each do |app| %>
+<% if app['root'] %>
+	ProxyPass <%=app['path']%> balancer://<%=app['backend']%>
+<% elsif app['src'] %>
+	RewriteEngine On
+	RewriteRule ^<%=app['src']%>/(.*) http://<%=virtualhost['name']%>/$1 [P]
+	ProxyPass <%=app['path']%> balancer://<%=app['backend']%><%=app['src']%>
+<% else %>
+	ProxyPass <%=app['path']%> balancer://<%=app['backend']%><%=app['path']%>
+<% end %>
+<% end %>
+<%################ HASTA ACA %>
+
+#	SSLEngine on
+#	SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP
+#	SSLCertificateFile /etc/httpd/cert/<%=virtualhost['name']%>.crt
+#	SSLCertificateKeyFile /etc/httpd/cert/<%=virtualhost['name']%>.key
+	
+</VirtualHost>
+<% end %>
+
+<% end %>

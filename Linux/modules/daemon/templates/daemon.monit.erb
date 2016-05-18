@@ -1,0 +1,9 @@
+
+check process <%=@name%> with pidfile <%=@daemon_run%>/<%=@name%>.pid
+      start = "<%=@daemon_bin%>/<%=@name%>.sh start"
+      stop  = "<%=@daemon_bin%>/<%=@name%>.sh stop"
+      group daemon
+#
+#     if failed port <%=@port%> then restart
+      if failed port <%=@port%> timeout <%=@daemon_time%> seconds for <%=@daemon_cycles%> cycles then restart
+      if 1 restarts within 1 cycles then exec '/etc/slack.rb'

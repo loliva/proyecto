@@ -1,0 +1,8 @@
+
+check process <%=@name%> with pidfile <%=@daemon_run%>/<%=@name%>.pid
+      start = "<%=@daemon_bin%>/<%=@name%>.sh start"
+      stop  = "<%=@daemon_bin%>/<%=@name%>.sh stop"
+      group daemon
+
+#      if failed port <%=@port%> then restart
+      if failed port <%=@port%> timeout 60 seconds for 1 cycles then restart

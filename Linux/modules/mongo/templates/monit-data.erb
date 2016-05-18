@@ -1,0 +1,5 @@
+check process mongo-<%=@data_name%> with pidfile <%=@data_base%>/<%=@data_name%>.pid
+start program = "/usr/bin/mongod --fork --syslog --syslogFacility local6 --port <%=@data_port%> --dbpath <%=@data_base%>/<%=@data_name%>  --pidfilepath <%=@data_base%>/<%=@data_name%>.pid --storageEngine wiredTiger --wiredTigerStatisticsLogDelaySecs 10 --wiredTigerCollectionBlockCompressor snappy --slowms 1000"
+stop program  = "/bin/bash -c '/bin/kill `/bin/cat <%=@data_base%>/<%=@data_name%>.pid`'"
+if failed port <%=@data_port%> then restart
+if 1 restarts within 1 cycles then exec '/etc/slack.rb'

@@ -1,0 +1,12 @@
+<configuration>
+  <appender name="syslog" class="ch.qos.logback.classic.net.SyslogAppender">
+    <Facility>${TSLOCAL}</Facility>
+    <SyslogHost>127.0.0.1</SyslogHost>
+    <Header>true</Header>
+    <SuffixPattern>${TSNAME} ${TSVERSION} %-5p [%-20.20t] %-30.30C{1} %m%n</SuffixPattern>
+  </appender>
+  <logger name="cl" level="DEBUG"/>
+  <root level="INFO">
+    <appender-ref ref="syslog"/>
+  </root>
+</configuration>

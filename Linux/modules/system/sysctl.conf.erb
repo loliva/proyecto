@@ -1,0 +1,67 @@
+# Aumentar el tamaño de identificadores de archivo y la memoria caché de inodos
+fs.file-max = 2097152
+
+# Hacer menos Swap
+vm.swappiness = 10
+vm.dirty_ratio = 60
+vm.dirty_background_ratio = 2
+
+### OPCIONES DE NETWORKING ###
+
+# SYNACK conexión TCP pasiva.
+net.ipv4.tcp_synack_retries = 2
+
+# Rango de puertos locales
+net.ipv4.ip_local_port_range = 1024 65535
+
+# TCP Time-wait
+net.ipv4.tcp_rfc1337 = 1
+
+# Valor tcp_fin_timeout reducido
+net.ipv4.tcp_fin_timeout = 15
+
+# Valor tcp_keepalive reducido
+net.ipv4.tcp_keepalive_time = 300
+net.ipv4.tcp_keepalive_probes = 5
+net.ipv4.tcp_keepalive_intvl = 15
+
+### TUNING NETWORK PERFORMANCE ###
+
+# Valor por defecto Socket Receiver buffer 
+net.core.rmem_default = 31457280
+
+# Maximo Socket Receive Buffer
+net.core.rmem_max = 12582912
+
+# Valor por defecto Socket Send Buffer
+net.core.wmem_default = 31457280
+
+# Maximo Socket Send Buffer
+net.core.wmem_max = 12582912
+
+# Aumentar maximo de conexiones entrantes
+net.core.somaxconn = 4096
+
+# Aumentar maximo de conexiones backlog
+net.core.netdev_max_backlog = 65536
+
+# Cantidad maxima de buffer de memoria opcional
+net.core.optmem_max = 25165824
+
+# Aumentar el máximo asignable total de buffer-espacio
+# Esto se mide en unidades de páginas (4096 bytes)
+net.ipv4.tcp_mem = 65536 131072 262144
+net.ipv4.udp_mem = 65536 131072 262144
+
+# Aumenta el espacio del buffer de lectura
+net.ipv4.tcp_rmem = 8192 87380 16777216
+net.ipv4.udp_rmem_min = 16384
+
+# Aumenta el espacio del buffer de escritura
+net.ipv4.tcp_wmem = 8192 65536 16777216
+net.ipv4.udp_wmem_min = 16384
+
+# Aumentar tamnaño tcp-time-wait buckets pool para prevenir ataques DOS
+net.ipv4.tcp_max_tw_buckets = 1440000
+net.ipv4.tcp_tw_recycle = 1
+net.ipv4.tcp_tw_reuse = 1

@@ -11,7 +11,10 @@ end
 
 
 # provisionamiento base, comun para todos
+config.vm.provision "shell", path: "Puppetsetup", privileged: true
 config.vm.provision "shell", path: "inicia.sh", privileged: true
+config.vm.provision "puppet", manifests_path: "manifests", manifest_file: "PROD.pp", module_path: "modules", options: "--verbose" 
+
 #
 
 

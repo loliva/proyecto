@@ -1,0 +1,27 @@
+#!/bin/bash
+
+case $1 in
+
+start)
+  # setear variables
+  java="<%=@java_path%>java"
+  jvm1="-DTSENV=<%=@daemon_env%> -DTSNODE=<%=@daemon_node%>"
+  jvm2="-DTSNAME=<%=@daemon_name%> -DTSVERSION=<%=@daemon_version%> -DTSLOCAL=<%=@daemon_local%>"
+  jvm3="<%=@daemon_common_params%> <%=@jvm_params%>"
+  jvmLog="-Dlog4j.configuration=file:/etc/log4j.properties -Dlogging.config=file:/etc/logback.xml"
+  jar="<%=@daemon_link%>"
+  arg="<%=@daemon_params%>"
+  pid="<%=@daemon_run%>/<%=@name%>.pid"
+  log="<%=@daemon_log%>/<%=@name%>.log"
+  
+  # ejecutar
+  ($java $jvm1 $jvm2 $jvm3 $jvmLog -jar $jar $arg & echo $! > $pid ) &> $log &
+  ;;
+
+stop)
+  kill $(cat <%=@daemon_run%>/<%=@name%>.pid) ;;
+
+*)
+  echo "usage:<%=@name%>.sh start|stop" ;;
+
+esac

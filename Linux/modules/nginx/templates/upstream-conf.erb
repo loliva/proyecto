@@ -1,0 +1,9 @@
+#### UPSTREAM APLICACIONES
+
+<% @services.each do |@service| %>
+upstream  <%=@service['name']%> {
+<% @service['hosts'].each do |@host| %>
+    server <%=@host%>;
+<% end %>
+}
+<% end %>

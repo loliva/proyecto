@@ -1,0 +1,4 @@
+node 'servidor' {
+  class { 'fixie': }
+  
+}

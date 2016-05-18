@@ -1,0 +1,53 @@
+global
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 2
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           1s
+    maxconn                 3000
+
+listen stats :<%=@monitor_port%>
+    mode http
+    stats enable
+    stats hide-version
+    stats realm Haproxy\ Statistics
+    stats uri /
+#    stats auth operaciones:gps
+
+frontend 0.0.0.0:<%=@service_port%>
+    bind *:<%=@service_port%>
+<% @services.each do |@service| %>
+    acl is_<%=@service['name']%> hdr_end(host) -i <%=@service['vhost']%>
+<% end %>
+
+<% @services.each do |@service| %>
+    use_backend <%=@service['vhost']%> if is_<%=@service['name']%>
+<% end %>
+
+<% @services.each do |@service| %>
+
+backend <%=@service['vhost']%>
+    balance     roundrobin
+<% @service['hosts'].each do |@host| %>
+    server  <%=@host%> <%=@host%> check
+<% end %>
+
+<% end %>
